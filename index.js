@@ -35,7 +35,7 @@ export default class ScrollPicker extends Component {
         super(props);
 
         this.itemHeight = this.props.itemHeight || 30;
-        this.wrapperHeight = this.props.wrapperHeight || (this.props.style ? this.props.style.height : 0) ||this.itemHeight * 5;
+        this.wrapperHeight = this.props.wrapperHeight || (this.props.style ? this.props.style.height : 0) ||this.props.itemHeight * 5;
 
         this.state = {
             selectedIndex: this.props.selectedIndex || 0
@@ -66,8 +66,8 @@ export default class ScrollPicker extends Component {
 
         let highlightStyle = {
             position:'absolute',
-            top:(this.wrapperHeight - this.itemHeight) / 2,
-            height:this.itemHeight,
+            top:(this.wrapperHeight - this.props.itemHeight) / 2,
+            height:this.props.itemHeight,
             width:highlightWidth,
             borderTopColor:highlightColor,
             borderBottomColor:highlightColor,
@@ -97,7 +97,7 @@ export default class ScrollPicker extends Component {
     }
 
     _renderPlaceHolder(){
-        let h = (this.wrapperHeight - this.itemHeight) / 2;
+        let h = (this.wrapperHeight - this.props.itemHeight) / 2;
         let header = <View style={{height:h, flex:1,}}></View>;
         let footer = <View style={{height:h, flex:1,}}></View>;
         return {header, footer};
@@ -112,14 +112,14 @@ export default class ScrollPicker extends Component {
         }
 
         return (
-            <View style={[styles.itemWrapper, {height:this.itemHeight}]} key={index}>
+            <View style={[styles.itemWrapper, {height:this.props.itemHeight}]} key={index}>
                 {item}
             </View>
         );
     }
     _scrollFix(e){
         let y = 0;
-        let h = this.itemHeight;
+        let h = this.props.itemHeight;
         if(e.nativeEvent.contentOffset){
             y = e.nativeEvent.contentOffset.y;
         }
@@ -186,7 +186,7 @@ export default class ScrollPicker extends Component {
         this.setState({
             selectedIndex:ind,
         });
-        let y = this.itemHeight * ind;
+        let y = this.props.itemHeight * ind;
         this.sview.scrollTo({y:y, animated});
     }
 
